@@ -12,18 +12,16 @@ class Clojurex <Formula
     cache = "#{HOMEBREW_CACHE}/#{name}-#{version}"
     cd cache
 
-    puts "#{prefix}"
     system "git submodule init"
     system "git submodule update"
     system "ant"
 
+    # prefix.install can be used if jar didn't live in sub dir
+    # external scripts reference the sub dirs
     mkdir "#{prefix}/clojure"
     mkdir "#{prefix}/clojure-contrib"
     mkdir "#{prefix}/jline"
-    #mkdir "#{bin}"
 
-    # prefix.install can be used if jar didn't live in sub dir
-    # external scripts reference the sub dirs
     `cp clojure/clojure.jar                 #{prefix}/clojure/clojure.jar` 
     `cp jline/jline.jar                     #{prefix}/jline/jline.jar` 
     `cp clojure-contrib/clojure-contrib.jar #{prefix}/clojure-contrib/clojure-contrib.jar` 
