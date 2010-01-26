@@ -3,8 +3,8 @@ require 'formula'
 class Clojurex <Formula
   # current clojurex doesn't have a version
   # it will be nice if clojurex can tag over all the submodules to create a version
-  version '0.0.1'
-  url 'git://github.com/citizen428/ClojureX.git'
+  #version '0.0.1'
+  head 'git://github.com/citizen428/ClojureX.git'
 
   depends_on 'git'
 
