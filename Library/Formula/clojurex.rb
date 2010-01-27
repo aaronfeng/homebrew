@@ -1,12 +1,16 @@
 require 'formula'
 
 class Clojurex <Formula
-  # current clojurex doesn't have a version
-  # it will be nice if clojurex can tag over all the submodules to create a version
-  #version '0.0.1'
-  head 'git://github.com/citizen428/ClojureX.git'
+  head 'git://github.com/citizen428/ClojureX.git', :tag => '0.3.0'
+  homepage 'http://github.com/citizen428/ClojureX'
 
   depends_on 'git'
+  depends_on 'maven'
+
+  def initialize(*args)
+    super
+    @version = '0.3.0'
+  end
 
   def install
     cache = "#{HOMEBREW_CACHE}/#{name}-#{version}"
@@ -16,8 +20,8 @@ class Clojurex <Formula
     system "git submodule update"
     system "ant"
 
-    # prefix.install can be used if jar didn't live in sub dir
-    # external scripts reference the sub dirs
+    # prefix.install cannot be used because each jar lives in its own subdir
+    # external scripts reference the subdir
     mkdir "#{prefix}/clojure"
     mkdir "#{prefix}/clojure-contrib"
     mkdir "#{prefix}/jline"
@@ -42,7 +46,7 @@ class Clojurex <Formula
     `cp -r #{cache}/clojure-mode     #{prefix}`
     `cp -r #{cache}/Clojure.tmbundle #{prefix}`
 
-    # this is a hack, creating the symlink directly into homebrew/bin
+    # creating the symlink directly into homebrew/bin
     # so full path will be used instead of relative
     FileUtils.ln_s "#{prefix}/clj", "#{prefix}/../../../bin/cljx"
   end
