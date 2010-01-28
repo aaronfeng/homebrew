@@ -12,5 +12,9 @@ class Ghc <Formula
   def install
     system "./configure --prefix=#{prefix}"
     system "make install"
+
+    # need to update ghc-6.10.4 because on 10.5 gcc defaults to x64
+    system "perl -pi.bak -e 's/wrapped/wrapped -optc-m32 -opta-m32 -optl-m32/g' #{bin}/ghc-6.10.4"
+    system "perl -pi.bak -e 's/\hsc2hs $tflag/hsc2hs --cflag=\"-m32\" --lflag=\"-m32\" \$tflag/g' #{bin}/hsc2hs"
   end 
 end
